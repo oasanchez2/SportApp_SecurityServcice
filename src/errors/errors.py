@@ -105,3 +105,15 @@ class InvalidMessageError(ApiError):
 class NotificacionNotFoundError(ApiError):
     code = 404
     description = "Notificacion does not exist"
+
+class UserAlreadyExists(ApiError):
+    code = 412
+    description = "User with username already exists"
+
+class InvalidPasswordError(ApiError):
+    code = 412
+    description = "Contraseña no conforme"
+
+class ClientInvalidParameterError(ApiError):
+    code = 412
+    description = "Error de parametros"

@@ -28,6 +28,21 @@ class CognitoService:
             Permanent=True
         )
     '''
+    def sign_up(self, username, password, rol):
+        response = self.cognito_client.sign_up(
+                ClientId=self.CLIENT_ID,
+                Username=username,
+                Password=password,
+                SecretHash= self.calculate_secret_hash(os.environ['APP_SPORTAPP'], os.environ['APP_SPORTAPPCLIENT'], username),
+                UserAttributes=[
+                    {
+                        'Name': 'custom:rol',
+                        'Value': rol
+                    }
+                ]
+            )
+        return response
+    
     def initiate_auth(self, username, password):
         response = self.cognito_client.initiate_auth(            
             ClientId=self.CLIENT_ID,
@@ -46,16 +61,16 @@ class CognitoService:
         )
         return response
     
-    def calculate_secret_hash(self,client_id, client_secret, username):
-        msg = username + client_id
-        dig = hmac.new(str(client_secret).encode('utf-8'), 
-                    msg=str(msg).encode('utf-8'), 
-                    digestmod=hashlib.sha256).digest()
-        return base64.b64encode(dig).decode()
-    
     def verify_software_token(self, access_token, user_code):
         response = self.cognito_client.verify_software_token(
             Session=access_token,
             UserCode=user_code
         )
         return response
+    
+    def calculate_secret_hash(self,client_id, client_secret, username):
+        msg = username + client_id
+        dig = hmac.new(str(client_secret).encode('utf-8'), 
+                    msg=str(msg).encode('utf-8'), 
+                    digestmod=hashlib.sha256).digest()
+        return base64.b64encode(dig).decode()
