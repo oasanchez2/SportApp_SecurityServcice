@@ -7,7 +7,7 @@ class LoginUsuario(BaseCommannd):
 
     def __init__(self, data):
        
-        if 'username' not in data or 'password' not in data or 'codigo_MFA' not in data:
+        if 'username' not in data or 'password' not in data:
             raise IncompleteParams()
         
         self.data = data

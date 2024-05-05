@@ -5,12 +5,18 @@ from ..commands.get_notificacion_user import GetNotificacionUser
 from ..commands.reset_notificacion import ResetNotificacion
 from ..commands.LoginUsuario import LoginUsuario
 from ..commands.register_usuario import RegisterUsuario
+from ..commands.confirmar_registro_usuario import ConfirmarRegistroUsuario
  
 security_blueprint = Blueprint('security', __name__)
 
 @security_blueprint.route('/security/login', methods = ['POST'])
 def login():
     result = LoginUsuario(request.get_json()).execute()
+    return jsonify(result), 201
+
+@security_blueprint.route('/security/confirmar-registro', methods = ['POST'])
+def confirmar_registro():
+    result = ConfirmarRegistroUsuario(request.get_json()).execute()
     return jsonify(result), 201
 
 @security_blueprint.route('/security/register', methods = ['POST'])

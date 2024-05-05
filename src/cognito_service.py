@@ -43,6 +43,15 @@ class CognitoService:
             )
         return response
     
+    def confirm_sign_up(self, username, confirmation_code):
+        response = self.cognito_client.confirm_sign_up(
+            ClientId=self.CLIENT_ID,
+            Username=username,
+            ConfirmationCode=confirmation_code,
+            SecretHash= self.calculate_secret_hash(os.environ['APP_SPORTAPP'], os.environ['APP_SPORTAPPCLIENT'], username)
+        )
+        return response
+    
     def initiate_auth(self, username, password):
         response = self.cognito_client.initiate_auth(            
             ClientId=self.CLIENT_ID,
