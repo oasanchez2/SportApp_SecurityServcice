@@ -13,6 +13,7 @@ class CognitoService:
             self.cognito_client = cognito_client
         
         self.CLIENT_ID = os.environ['APP_SPORTAPP']
+        self.SPORTAAIDGRUPO = os.environ['APP_SPORTAAIDGRUPO']
     '''
     def create_user(self, username, password):
         self.cognito_client.admin_create_user(
@@ -76,6 +77,22 @@ class CognitoService:
             UserCode=user_code
         )
         return response
+    
+    def admin_respond_to_auth_challenge(self, session, username, mfa_code):
+         response = self.cognito_client.admin_respond_to_auth_challenge(
+                UserPoolId=self.SPORTAAIDGRUPO,
+                ClientId=self.CLIENT_ID,
+                ChallengeName="SOFTWARE_TOKEN_MFA",
+                Session=session,
+                ChallengeResponses={
+                    'USERNAME': username,
+                    'SOFTWARE_TOKEN_MFA_CODE': mfa_code,
+                    'SECRET_HASH': self.calculate_secret_hash(os.environ['APP_SPORTAPP'], os.environ['APP_SPORTAPPCLIENT'], username)
+                }                
+            )
+         
+         return response
+        
     
     def calculate_secret_hash(self,client_id, client_secret, username):
         msg = username + client_id
