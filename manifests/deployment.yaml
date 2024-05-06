@@ -27,6 +27,12 @@ spec:
           value: ENV1
         - name: AWS_SECRET_ACCESS_KEY
           value: ENV2
+        - name: APP_SPORTAPP
+          value: ENV3
+        - name: APP_SPORTAPPCLIENT
+          value: ENV4
+        - name: APP_SPORTAAIDGRUPO
+          value: ENV5  
   strategy:
     type: RollingUpdate
     rollingUpdate:

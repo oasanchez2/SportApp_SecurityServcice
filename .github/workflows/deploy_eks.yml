@@ -44,5 +44,8 @@ jobs:
         sed -i.bak "s|DOCKER_IMAGE|$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG|g" manifests/deployment.yaml && \
         sed -i.bak "s|ENV1|$AWS_ACCESS_KEY_ID|g" manifests/deployment.yaml && \
         sed -i.bak "s|ENV2|$AWS_SECRET_ACCESS_KEY|g" manifests/deployment.yaml && \
+        sed -i.bak "s|ENV3|$APP_SPORTAPP|g" manifests/deployment.yaml && \
+        sed -i.bak "s|ENV4|$APP_SPORTAPPCLIENT|g" manifests/deployment.yaml && \
+        sed -i.bak "s|ENV5|$APP_SPORTAAIDGRUPO|g" manifests/deployment.yaml && \
         kubectl apply -f manifests/deployment.yaml --validate=false
         kubectl apply -f manifests/service.yaml --validate=false
