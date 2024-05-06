@@ -6,6 +6,7 @@ from ..commands.reset_notificacion import ResetNotificacion
 from ..commands.LoginUsuario import LoginUsuario
 from ..commands.register_usuario import RegisterUsuario
 from ..commands.confirmar_registro_usuario import ConfirmarRegistroUsuario
+from ..commands.activar_mfa import ActivarMfa
  
 security_blueprint = Blueprint('security', __name__)
 
@@ -13,6 +14,12 @@ security_blueprint = Blueprint('security', __name__)
 def login():
     result = LoginUsuario(request.get_json()).execute()
     return jsonify(result), 201
+
+@security_blueprint.route('/security/activar-mfa', methods = ['POST'])
+def activar_mfa():
+    result = ActivarMfa(request.get_json()).execute()
+    return jsonify(result)
+
 
 @security_blueprint.route('/security/confirmar-registro', methods = ['POST'])
 def confirmar_registro():
