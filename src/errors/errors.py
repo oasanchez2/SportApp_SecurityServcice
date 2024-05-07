@@ -117,3 +117,7 @@ class InvalidPasswordError(ApiError):
 class ClientInvalidParameterError(ApiError):
     code = 412
     description = "Error de parametros"
+
+class CodeInvalidForUserError(ApiError):
+    code = 401
+    description = "Invalid code received for user"
