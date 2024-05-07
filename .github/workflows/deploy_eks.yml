@@ -8,6 +8,9 @@ env:
   AWS_REGION: us-east-1
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  APP_SPORTAPP: ${{ secrets.APP_SPORTAPP }}
+  APP_SPORTAPPCLIENT: ${{ secrets.APP_SPORTAPPCLIENT }}
+  APP_SPORTAAIDGRUPO: ${{ secrets.APP_SPORTAAIDGRUPO }}
 jobs:
   build:
     name: Deployment
