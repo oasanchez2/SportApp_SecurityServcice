@@ -1,12 +1,10 @@
 from flask import Flask, jsonify, request, Blueprint
-from ..commands.create_notificacion import CreateNotificacion
-from ..commands.get_notificacion import  GetNotificacion
-from ..commands.get_notificacion_user import GetNotificacionUser
 from ..commands.reset_notificacion import ResetNotificacion
-from ..commands.LoginUsuario import LoginUsuario
+from ..commands.login_usuario import LoginUsuario
 from ..commands.register_usuario import RegisterUsuario
 from ..commands.confirmar_registro_usuario import ConfirmarRegistroUsuario
-from ..commands.activar_mfa import ActivarMfa
+from ..commands.desafio_mfa import DesafioMfa
+from ..commands.verificar_mfa import VerifyMfa
  
 security_blueprint = Blueprint('security', __name__)
 
@@ -15,11 +13,10 @@ def login():
     result = LoginUsuario(request.get_json()).execute()
     return jsonify(result), 201
 
-@security_blueprint.route('/security/activar-mfa', methods = ['POST'])
+@security_blueprint.route('/security/desafio-mfa', methods = ['POST'])
 def activar_mfa():
-    result = ActivarMfa(request.get_json()).execute()
+    result = DesafioMfa(request.get_json()).execute()
     return jsonify(result)
-
 
 @security_blueprint.route('/security/confirmar-registro', methods = ['POST'])
 def confirmar_registro():
@@ -30,6 +27,11 @@ def confirmar_registro():
 def register():
     user = RegisterUsuario(request.get_json()).execute()
     return jsonify(user), 201
+
+@security_blueprint.route('/security/verify-mfa', methods = ['POST'])
+def verify_mfa():
+    user = VerifyMfa(request.get_json()).execute()
+    return jsonify(user)
 
 @security_blueprint.route('/security/ping', methods = ['GET'])
 def ping():

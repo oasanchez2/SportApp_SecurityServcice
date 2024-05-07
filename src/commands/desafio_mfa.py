@@ -1,10 +1,10 @@
 from .base_command import BaseCommannd
 from ..cognito_service import CognitoService
 from botocore.exceptions import ClientError
-from ..errors.errors import Unauthorized, IncompleteParams, UserNotFoundError, UserNotConfirmedError, ClientExError, ExpiredCodeExceptionError
+from ..errors.errors import Unauthorized, IncompleteParams, UserNotFoundError, UserNotConfirmedError, ClientExError, ExpiredCodeExceptionError,CodeInvalidForUserError
 from ..models.register_model import RegisterModel,RegisterJsonModel
 
-class ActivarMfa(BaseCommannd):
+class DesafioMfa(BaseCommannd):
     def __init__(self, data):
         
             required_fields = ['email', 'session', 'mfa_code']
@@ -33,5 +33,7 @@ class ActivarMfa(BaseCommannd):
                 raise IncompleteParams
             elif err.response['Error']['Code'] == 'ExpiredCodeException':
                 raise ExpiredCodeExceptionError
+            elif err.response['Error']['Code'] == 'CodeMismatchException':
+                raise CodeInvalidForUserError   
             else:
                 raise ClientExError
