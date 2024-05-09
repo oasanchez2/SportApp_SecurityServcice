@@ -5,6 +5,7 @@ from ..commands.register_usuario import RegisterUsuario
 from ..commands.confirmar_registro_usuario import ConfirmarRegistroUsuario
 from ..commands.desafio_mfa import DesafioMfa
 from ..commands.verificar_mfa import VerifyMfa
+from ..commands.get_user import GetUser
  
 security_blueprint = Blueprint('security', __name__)
 
@@ -31,6 +32,12 @@ def register():
 @security_blueprint.route('/security/verify-mfa', methods = ['POST'])
 def verify_mfa():
     user = VerifyMfa(request.get_json()).execute()
+    return jsonify(user)
+
+@security_blueprint.route('/security/me', methods = ['GET'])
+def show():
+    user = GetUser(auth_token()).execute()
+    print(user)
     return jsonify(user)
 
 @security_blueprint.route('/security/ping', methods = ['GET'])

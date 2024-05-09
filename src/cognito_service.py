@@ -92,7 +92,12 @@ class CognitoService:
             )
          
          return response
-        
+    
+    def get_user(self, access_token):
+        response = self.cognito_client.get_user(
+            AccessToken=access_token
+        )
+        return response
     
     def calculate_secret_hash(self,client_id, client_secret, username):
         msg = username + client_id
