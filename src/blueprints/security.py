@@ -6,6 +6,8 @@ from ..commands.confirmar_registro_usuario import ConfirmarRegistroUsuario
 from ..commands.desafio_mfa import DesafioMfa
 from ..commands.verificar_mfa import VerifyMfa
 from ..commands.get_user import GetUser
+from ..commands.recuperar_clave import RecuperarClave
+from ..commands.confirmar_recuperar_clave import ComfirmarRecuperarClave
  
 security_blueprint = Blueprint('security', __name__)
 
@@ -39,6 +41,16 @@ def show():
     user = GetUser(auth_token()).execute()
     print(user)
     return jsonify(user)
+
+@security_blueprint.route('/security/recuperar-clave', methods = ['POST'])
+def forgot():
+    result = RecuperarClave(request.get_json()).execute()
+    return jsonify(result), 201
+
+@security_blueprint.route('/security/confirmar-recuperar-clave', methods = ['POST'])
+def confirm_forgot():
+    result = ComfirmarRecuperarClave(request.get_json()).execute()
+    return jsonify(result), 201
 
 @security_blueprint.route('/security/ping', methods = ['GET'])
 def ping():

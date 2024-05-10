@@ -99,6 +99,24 @@ class CognitoService:
         )
         return response
     
+    def forgot_password(self, username):
+        response = self.cognito_client.forgot_password(
+            ClientId=self.CLIENT_ID,
+            SecretHash=self.calculate_secret_hash(os.environ['APP_SPORTAPP'], os.environ['APP_SPORTAPPCLIENT'], username),
+            Username=username
+        )
+        return response
+    
+    def confirm_forgot_password(self, username, confirmation_code, password):
+        response = self.cognito_client.confirm_forgot_password(
+            ClientId=self.CLIENT_ID,
+            SecretHash=self.calculate_secret_hash(os.environ['APP_SPORTAPP'], os.environ['APP_SPORTAPPCLIENT'], username),
+            Username=username,
+            ConfirmationCode=confirmation_code,
+            Password=password
+        )
+        return response
+    
     def calculate_secret_hash(self,client_id, client_secret, username):
         msg = username + client_id
         dig = hmac.new(str(client_secret).encode('utf-8'), 
