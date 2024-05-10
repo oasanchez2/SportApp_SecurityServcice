@@ -121,3 +121,10 @@ class ClientInvalidParameterError(ApiError):
 class CodeInvalidForUserError(ApiError):
     code = 401
     description = "Invalid code received for user"
+    
+class ExeptionCognitoCustomError(ApiError):
+    code = 500
+    description = "Error exeption"
+    def __init__(self, status_code, mensaje):
+        self.code = status_code
+        self.description = mensaje
