@@ -8,9 +8,7 @@ class RegisterUsuario(BaseCommannd):
     
     def __init__(self, data):
        
-        required_fields = ['nombre', 'apellido', 'tipo_identificacion', 'numero_identificacion', 
-                           'genero_nacimiento', 'edad', 'peso', 'estatura', 'deportes_desea_practicar',   
-                           'email', 'password','rol']
+        required_fields = ['email', 'password','rol']
         print(data)
         if not all(field in data for field in required_fields):
             raise IncompleteParams()
@@ -21,9 +19,7 @@ class RegisterUsuario(BaseCommannd):
     def execute(self):
       
         try:
-            user = RegisterModel('', self.data['nombre'], self.data['apellido'], self.data['tipo_identificacion'],
-                                 self.data['numero_identificacion'], self.data['genero_nacimiento'], self.data['edad'], self.data['peso'],
-                                 self.data['estatura'], self.data['deportes_desea_practicar'], self.data['email'], self.data['password'],
+            user = RegisterModel('', self.data['email'], self.data['password'],
                                  self.data['rol'])
             response = self.cognito.sign_up(self.data['email'], self.data['password'], self.data['rol'])
             user.id_usuario = response['UserSub']
