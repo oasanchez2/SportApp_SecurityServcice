@@ -19,10 +19,11 @@ class RegisterUsuario(BaseCommannd):
     def execute(self):
       
         try:
-            user = RegisterModel('', self.data['email'], self.data['password'],
-                                 self.data['rol'])
+            user = RegisterModel('', self.data['email'], self.data['password'], self.data['rol'])
             response = self.cognito.sign_up(self.data['email'], self.data['password'], self.data['rol'])
             user.id_usuario = response['UserSub']
+            user.id_usuario = response['UserSub']
+            user.password = ''
             return user
         except ClientError as err: 
             print(f"Here's why: {err.response['Error']['Code']}: {err.response['Error']['Message']}")
